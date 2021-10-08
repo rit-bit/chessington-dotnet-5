@@ -45,6 +45,16 @@ namespace Chessington.GameEngine
         {
             return _board[square.Row, square.Col] != null;
         }
+        
+        public bool SquareOccupiedBy(Square square, Player player)
+        {
+            if (!SquareOccupied(square))
+            {
+                return false;
+            }
+
+            return _board[square.Row, square.Col].Player == player;
+        }
 
         public bool PathBlocked(IEnumerable<Square> path)
         {

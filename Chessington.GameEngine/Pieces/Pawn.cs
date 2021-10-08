@@ -13,8 +13,11 @@ namespace Chessington.GameEngine.Pieces
 
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
-            return GetMovePatternSquares(board)
+            var moveSquares = GetValidMovePatternSquares(board)
                 .Where(square => !board.SquareOccupied(square) && !board.PathBlocked(GetPath(board, square)));
+            var attackSquares = GetValidAttackPatternSquares(board)
+                .Where(square => board.SquareOccupiedBy(square, Player.Other()));
+            return moveSquares.Concat(attackSquares);
         }
 
         private IEnumerable<Square> GetPath(Board board, Square destination)
@@ -26,6 +29,12 @@ namespace Chessington.GameEngine.Pieces
                 var rowInBetween = (destination.Row + location.Row) / 2;
                 yield return Square.At(rowInBetween, location.Col);
             }
+        }
+
+        private IEnumerable<Square> GetValidMovePatternSquares(Board board)
+        {
+            return GetMovePatternSquares(board)
+                .Where(square => square.IsValid());
         }
 
         private IEnumerable<Square> GetMovePatternSquares(Board board)
@@ -47,6 +56,24 @@ namespace Chessington.GameEngine.Pieces
                     yield return Square.At(location.Row - 2, location.Col);
                 }
             }
+        }
+
+        private IEnumerable<Square> GetValidAttackPatternSquares(Board board)
+        {
+            return GetAttackPatternSquares(board)
+                .Where(square => square.IsValid());
+        }
+
+        private IEnumerable<Square> GetAttackPatternSquares(Board board)
+        {
+            var location = board.FindPiece(this);
+            return GetTwoAttackSquares(Player == Player.Black ? location.Row + 1 : location.Row - 1, location.Col);
+        }
+
+        private static IEnumerable<Square> GetTwoAttackSquares(int row, int middleCol)
+        {
+            yield return Square.At(row, middleCol + 1);
+            yield return Square.At(row, middleCol - 1);
         }
     }
 }

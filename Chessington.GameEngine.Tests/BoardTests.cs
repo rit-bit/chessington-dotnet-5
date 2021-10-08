@@ -29,5 +29,38 @@ namespace Chessington.GameEngine.Tests
 
             location.Should().Be(square);
         }
+
+        [Test]
+        public void Square00CanBeValidated()
+        {
+            var board = new Board();
+            var square = Square.At(0, 0);
+            square.IsValid().Should().Be(true);
+        }
+        
+        [Test]
+        public void Square07CanBeValidated()
+        {
+            var board = new Board();
+            var square = Square.At(0, 7);
+            square.IsValid().Should().Be(true);
+        }
+        
+        [Test]
+        public void Square70CanBeValidated()
+        {
+            var board = new Board();
+            var square = Square.At(7, 0);
+            square.IsValid().Should().Be(true);
+        }
+        
+        
+        [Test]
+        public void Square77CanBeValidated()
+        {
+            var board = new Board();
+            var square = Square.At(7, 7);
+            square.IsValid().Should().Be(true);
+        }
     }
 }
