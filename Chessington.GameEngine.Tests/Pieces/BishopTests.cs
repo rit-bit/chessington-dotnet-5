@@ -64,9 +64,9 @@ namespace Chessington.GameEngine.Tests.Pieces
         public void BishopCanTakeOpposingPiece()
         {
             var board = new Board();
-            var bishop = new Bishop(Player.Black);
+            var bishop = new Bishop(Player.White);
             board.AddPiece(Square.At(1, 4), bishop);
-            var friendlyPawn = new Pawn(Player.White);
+            var friendlyPawn = new Pawn(Player.Black);
             board.AddPiece(Square.At(3, 2), friendlyPawn);
             var moves = bishop.GetAvailableMoves(board).ToList();
 
