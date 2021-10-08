@@ -3,14 +3,26 @@ using System.Linq;
 
 namespace Chessington.GameEngine.Pieces
 {
-    public class Queen : Piece
+    public class Queen : StraightLinePiece
     {
         public Queen(Player player)
-            : base(player) { }
+            : base(player)
+        {
+        }
 
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
-            return Enumerable.Empty<Square>();
+            var position = board.FindPiece(this);
+            // Orthogonals
+            return GetStraightLineMoves(board, position, 1, 0)
+                .Concat(GetStraightLineMoves(board, position, -1, 0))
+                .Concat(GetStraightLineMoves(board, position, 0, 1))
+                .Concat(GetStraightLineMoves(board, position, 0, -1))
+                // Diagonals
+                .Concat(GetStraightLineMoves(board, position, 1, 1))
+                .Concat(GetStraightLineMoves(board, position, 1, -1))
+                .Concat(GetStraightLineMoves(board, position, -1, 1))
+                .Concat(GetStraightLineMoves(board, position, -1, -1));
         }
     }
 }
