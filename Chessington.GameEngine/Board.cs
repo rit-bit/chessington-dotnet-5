@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Chessington.GameEngine.Pieces;
 
 namespace Chessington.GameEngine
@@ -38,6 +39,16 @@ namespace Chessington.GameEngine
                         return Square.At(row, col);
 
             throw new ArgumentException("The supplied piece is not on the board.", "piece");
+        }
+
+        public bool SquareOccupied(Square square)
+        {
+            return _board[square.Row, square.Col] != null;
+        }
+
+        public bool PathBlocked(IEnumerable<Square> path)
+        {
+            return path.Any(SquareOccupied);
         }
 
         public void MovePiece(Square from, Square to)
