@@ -14,10 +14,18 @@ namespace Chessington.GameEngine.Pieces
             if (Player == Player.Black)
             {
                 yield return Square.At(location.Row + 1, location.Col);
+                if (!HasBeenMoved)
+                {
+                    yield return Square.At(location.Row + 2, location.Col);
+                }
             }
             else
             {
                 yield return Square.At(location.Row - 1, location.Col);
+                if (!HasBeenMoved)
+                {
+                    yield return Square.At(location.Row - 2, location.Col);
+                }
             }
         }
     }
