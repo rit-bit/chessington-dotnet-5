@@ -78,5 +78,7 @@ namespace Chessington.GameEngine.Tests.Pieces
             moves.Should().NotContain(Square.At(1, 0));
             moves.Should().Contain(Square.At(1, 1));
         }
+        
+        //TODO Add test for castling? Or maybe part of KingTests?
     }
 }
