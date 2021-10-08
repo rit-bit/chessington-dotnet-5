@@ -44,5 +44,35 @@ namespace Chessington.GameEngine.Tests.Pieces
             moves.Should().Contain(Square.At(6, 4));
             moves.Should().Contain(Square.At(7, 5));
         }
+        
+        [Test]
+        public void BishopIsBlockedByFriendlyPiece()
+        {
+            var board = new Board();
+            var bishop = new Bishop(Player.Black);
+            board.AddPiece(Square.At(1, 4), bishop);
+            var friendlyPawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(3, 2), friendlyPawn);
+            var moves = bishop.GetAvailableMoves(board).ToList();
+
+            moves.Count.Should().Be(6);
+            moves.Should().NotContain(Square.At(3, 2));
+            moves.Should().NotContain(Square.At(4, 1));
+        }
+        
+        [Test]
+        public void BishopCanTakeOpposingPiece()
+        {
+            var board = new Board();
+            var bishop = new Bishop(Player.Black);
+            board.AddPiece(Square.At(1, 4), bishop);
+            var friendlyPawn = new Pawn(Player.White);
+            board.AddPiece(Square.At(3, 2), friendlyPawn);
+            var moves = bishop.GetAvailableMoves(board).ToList();
+
+            moves.Count.Should().Be(7);
+            moves.Should().Contain(Square.At(3, 2));
+            moves.Should().NotContain(Square.At(4, 1));
+        }
     }
 }
