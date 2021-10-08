@@ -10,7 +10,22 @@ namespace Chessington.GameEngine.Pieces
 
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
-            return Enumerable.Empty<Square>();
+            var position = board.FindPiece(this);
+            return GetDiagonalMoves(position, 1, 1)
+                .Concat(GetDiagonalMoves(position, 1, -1))
+                .Concat(GetDiagonalMoves(position, -1, 1))
+                .Concat(GetDiagonalMoves(position, -1, -1));
         }
+
+        private IEnumerable<Square> GetDiagonalMoves(Square position, int rowIncrement, int colIncrement)
+        {
+            var newSquare = Square.At(position.Row + colIncrement, position.Col + rowIncrement);
+            while (newSquare.IsValid())
+            {
+                yield return newSquare;
+                newSquare = Square.At(newSquare.Row + colIncrement, newSquare.Col + rowIncrement);
+            }
+        }
+        
     }
 }
