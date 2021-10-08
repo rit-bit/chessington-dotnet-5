@@ -18,10 +18,14 @@ namespace Chessington.GameEngine.Pieces
 
         private IEnumerable<Square> GetMovePatternSquares(Board board)
         {
-            GetPairOfMoves();
+            var position = board.FindPiece(this);
+            return GetPairOfMoves(board, position, a)
+                .Concat(GetPairOfMoves(board, position, b))
+                .Concat(GetPairOfMoves(board, position, c))
+                .Concat(GetPairOfMoves(board, position, d));
         }
 
-        private IEnumerable<Square> GetPairOfMoves()
+        private IEnumerable<Square> GetPairOfMoves(Board board,Square position, other)
         {
             
         }
