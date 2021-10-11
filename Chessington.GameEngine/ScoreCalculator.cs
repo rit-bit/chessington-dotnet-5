@@ -1,5 +1,7 @@
 ﻿
 
+using System.Linq;
+
 namespace Chessington.GameEngine
 {
     public class ScoreCalculator
@@ -13,14 +15,16 @@ namespace Chessington.GameEngine
 
         public int GetWhiteScore()
         {
-            // Should add up the value of all of the pieces that white has taken.
-            return 0;
+            return _board.CapturedPieces
+                .Where(piece => piece.Player == Player.White)
+                .Sum(piece => piece.Value);
         }
 
         public int GetBlackScore()
         {
-            // Should add up the value of all of the pieces that black has taken.
-            return 0;
+            return _board.CapturedPieces
+                .Where(piece => piece.Player == Player.Black)
+                .Sum(piece => piece.Value);
         }
     }
 }
