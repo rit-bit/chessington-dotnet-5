@@ -68,7 +68,7 @@ namespace Chessington.GameEngine.Tests
         }
         
         [Test]
-        public void WhiteScoreCounter()
+        public void SimpleWhiteScoreCount()
         {
             var board = A.Fake<IBoard>();
             var pieces = new List<Piece>
@@ -83,11 +83,9 @@ namespace Chessington.GameEngine.Tests
 
             whiteScore.Should().Be(2);
         }
-        
-        
-        
+
         [Test]
-        public void BlackScoreCounter()
+        public void SimpleBlackScoreCount()
         {
             var board = A.Fake<IBoard>();
             var pieces = new List<Piece>
@@ -101,6 +99,50 @@ namespace Chessington.GameEngine.Tests
             var blackScore = calculator.GetBlackScore();
 
             blackScore.Should().Be(1);
+        }
+        
+        [Test]
+        public void ComplexBlackScoreCount()
+        {
+            var board = A.Fake<IBoard>();
+            var pieces = new List<Piece>
+            {
+                new Pawn(Player.White),
+                new Pawn(Player.White),
+                new Pawn(Player.Black),
+                new Bishop(Player.Black),
+                new Bishop(Player.White),
+                new Rook(Player.White),
+                new Rook(Player.White),
+                new Queen(Player.Black)
+            };
+            A.CallTo(() => board.CapturedPieces).Returns(pieces);
+            var calculator = new ScoreCalculator(board);
+            var blackScore = calculator.GetBlackScore();
+
+            blackScore.Should().Be(17);
+        }
+        
+        [Test]
+        public void ComplexWhiteScoreCount()
+        {
+            var board = A.Fake<IBoard>();
+            var pieces = new List<Piece>
+            {
+                new Pawn(Player.White),
+                new Pawn(Player.White),
+                new Pawn(Player.Black),
+                new Bishop(Player.Black),
+                new Bishop(Player.White),
+                new Rook(Player.White),
+                new Rook(Player.White),
+                new Queen(Player.Black)
+            };
+            A.CallTo(() => board.CapturedPieces).Returns(pieces);
+            var calculator = new ScoreCalculator(board);
+            var whiteScore = calculator.GetWhiteScore();
+
+            whiteScore.Should().Be(15);
         }
     }
 }
