@@ -1,6 +1,10 @@
-﻿using Chessington.GameEngine.Pieces;
+﻿using System.Collections.Generic;
+using System.Windows.Documents;
+using Chessington.GameEngine.Pieces;
+using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
+using NUnit;
 
 namespace Chessington.GameEngine.Tests
 {
@@ -61,6 +65,42 @@ namespace Chessington.GameEngine.Tests
             var board = new Board();
             var square = Square.At(7, 7);
             square.IsValid().Should().Be(true);
+        }
+        
+        [Test]
+        public void WhiteScoreCounter()
+        {
+            var board = A.Fake<IBoard>();
+            var pieces = new List<Piece>
+            {
+                new Pawn(Player.White),
+                new Pawn(Player.White),
+                new Pawn(Player.Black)
+            };
+            A.CallTo(() => board.CapturedPieces).Returns(pieces);
+            var calculator = new ScoreCalculator(board);
+            var whiteScore = calculator.GetWhiteScore();
+
+            whiteScore.Should().Be(2);
+        }
+        
+        
+        
+        [Test]
+        public void BlackScoreCounter()
+        {
+            var board = A.Fake<IBoard>();
+            var pieces = new List<Piece>
+            {
+                new Pawn(Player.White),
+                new Pawn(Player.White),
+                new Pawn(Player.Black)
+            };
+            A.CallTo(() => board.CapturedPieces).Returns(pieces);
+            var calculator = new ScoreCalculator(board);
+            var blackScore = calculator.GetBlackScore();
+
+            blackScore.Should().Be(1);
         }
     }
 }

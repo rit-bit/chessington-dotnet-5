@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,6 +8,8 @@ namespace Chessington.GameEngine.Pieces
     {
         public King(Player player)
             : base(player) { }
+
+        public override int Value => 0;
 
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {

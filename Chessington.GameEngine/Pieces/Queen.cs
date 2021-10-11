@@ -5,6 +5,8 @@ namespace Chessington.GameEngine.Pieces
 {
     public class Queen : StraightLinePiece
     {
+        public override int Value => 9;
+        
         public Queen(Player player)
             : base(player)
         {

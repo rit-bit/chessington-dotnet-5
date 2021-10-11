@@ -9,6 +9,8 @@ namespace Chessington.GameEngine.Pieces
             : base(player)
         {
         }
+        
+        public override int Value => 3;
 
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {

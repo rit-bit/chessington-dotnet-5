@@ -8,6 +8,8 @@ namespace Chessington.GameEngine.Pieces
         public Rook(Player player)
             : base(player) { }
 
+        public override int Value => 5;
+
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
             var position = board.FindPiece(this);

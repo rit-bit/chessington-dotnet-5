@@ -4,6 +4,7 @@ namespace Chessington.GameEngine.Pieces
 {
     public abstract class Piece
     {
+        public abstract int Value { get; }
         protected Piece(Player player)
         {
             Player = player;

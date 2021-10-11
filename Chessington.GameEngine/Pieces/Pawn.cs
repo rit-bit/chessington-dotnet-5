@@ -6,6 +6,8 @@ namespace Chessington.GameEngine.Pieces
 {
     public class Pawn : Piece
     {
+        public override int Value => 1;
+        
         public Pawn(Player player)
             : base(player)
         {
