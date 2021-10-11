@@ -13,12 +13,26 @@ namespace Chessington.GameEngine.Pieces
 
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
-            return GetValidMoves(board)
-                .Where(square => !board.SquareOccupiedBy(square, Player))
-                .Where(square => !board.IsInCheck(square, Player));
+            var location = board.FindPiece(this);
+            /*foreach (var move in GetUnoccupiedMoves(board))
+            {
+                var clone = board.Clone();
+                clone.MovePiece(location, move);
+                if (clone.IsInCheck(move, Player))
+                {
+                    yield return move;
+                }
+            }*/
+            return GetUnoccupiedMoves(board); // TODO Remove when uncommenting the code above
         }
 
-        public IEnumerable<Square> GetValidMoves(Board board)
+        private IEnumerable<Square> GetUnoccupiedMoves(Board board)
+        {
+            return GetValidMoves(board)
+                .Where(square => !board.SquareOccupiedBy(square, Player));
+        }
+
+        private IEnumerable<Square> GetValidMoves(Board board)
         {
             return GetMovePatternSquares(board).Where(square => square.IsValid());
         }

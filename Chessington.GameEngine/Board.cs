@@ -21,6 +21,29 @@ namespace Chessington.GameEngine
             CapturedPieces = new List<Piece>();
         }
 
+        private Board(Board board)
+        {
+            _board = ClonePieceArray(board._board);
+            CurrentPlayer = board.CurrentPlayer;
+            CapturedPieces = board.CapturedPieces;
+        }
+
+        public Board Clone()
+        {
+            return new Board(this);
+        }
+
+        private static Piece[,] ClonePieceArray(Piece[,] toClone)
+        {
+            var pieces = new Piece[GameSettings.BoardSize, GameSettings.BoardSize];
+            foreach (var square in Square.All())
+            {
+                // pieces[square.Row, square.Col] = toClone[square.Row, square.Col].Clone();
+                // TODO Implement cloning on Pieces/subclasses ?
+            }
+            return pieces;
+        }
+
         public void AddPiece(Square square, Piece pawn)
         {
             _board[square.Row, square.Col] = pawn;
@@ -98,7 +121,7 @@ namespace Chessington.GameEngine
             _board[to.Row, to.Col] = _board[from.Row, from.Col];
             _board[from.Row, from.Col] = null;
 
-            CurrentPlayer = movingPiece.Player == Player.White ? Player.Black : Player.White;
+            CurrentPlayer = movingPiece.Player.Other();
             OnCurrentPlayerChanged(CurrentPlayer);
         }
         
