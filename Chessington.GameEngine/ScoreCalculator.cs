@@ -13,17 +13,10 @@ namespace Chessington.GameEngine
             _board = board;
         }
 
-        public int GetWhiteScore()
+        public int GetScore(Player player)
         {
             return _board.CapturedPieces
-                .Where(piece => piece.Player == Player.Black)
-                .Sum(piece => piece.Value);
-        }
-
-        public int GetBlackScore()
-        {
-            return _board.CapturedPieces
-                .Where(piece => piece.Player == Player.White)
+                .Where(piece => piece.Player == player.Other())
                 .Sum(piece => piece.Value);
         }
     }

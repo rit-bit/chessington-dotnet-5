@@ -50,5 +50,42 @@ namespace Chessington.GameEngine.Tests.Pieces
             moves.Should().Contain(Square.At(6, 1));
             moves.Should().Contain(Square.At(6, 0));
         }
+        
+        [Test]
+        public void KingCantMoveIntoCheck()
+        {
+            var board = new Board();
+            var king = new King(Player.Black);
+            board.AddPiece(Square.At(7, 1), king);
+            var opposingRook = new Rook(Player.White);
+            board.AddPiece(Square.At(6, 7), opposingRook);
+            var moves = king.GetAvailableMoves(board).ToList();
+
+            moves.Count.Should().Be(2);
+            moves.Should().NotContain(Square.At(6, 2));
+            moves.Should().NotContain(Square.At(6, 1));
+            moves.Should().NotContain(Square.At(6, 0));
+            
+            moves.Should().Contain(Square.At(7, 2));
+            moves.Should().Contain(Square.At(7, 0));
+        }
+
+        [Test]
+        public void KingCanMoveIntoLineOfFriendlyRook()
+        {
+            var board = new Board();
+            var king = new King(Player.White);
+            board.AddPiece(Square.At(7, 1), king);
+            var opposingRook = new Rook(Player.White);
+            board.AddPiece(Square.At(6, 7), opposingRook);
+            var moves = king.GetAvailableMoves(board).ToList();
+
+            moves.Count.Should().Be(5);
+            moves.Should().Contain(Square.At(6, 2));
+            moves.Should().Contain(Square.At(6, 1));
+            moves.Should().Contain(Square.At(6, 0));
+            moves.Should().Contain(Square.At(7, 2));
+            moves.Should().Contain(Square.At(7, 0));
+        }
     }
 }

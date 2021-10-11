@@ -13,8 +13,9 @@ namespace Chessington.GameEngine.Pieces
 
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
-            // TODO King should not be able to move into check
-            return GetValidMoves(board).Where(square => !board.SquareOccupiedBy(square, Player));
+            return GetValidMoves(board)
+                .Where(square => !board.SquareOccupiedBy(square, Player))
+                .Where(square => !board.IsInCheck(square, Player));
         }
 
         public IEnumerable<Square> GetValidMoves(Board board)

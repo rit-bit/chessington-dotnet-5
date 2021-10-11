@@ -61,6 +61,23 @@ namespace Chessington.GameEngine
             return path.Any(SquareOccupied);
         }
 
+        public bool IsInCheck(Square position, Player defender)
+        {
+            foreach (var square in Square.All())
+            {
+                if (SquareOccupied(square))
+                {
+                    var piece = _board[square.Row, square.Col];
+                    if (piece.Player == defender.Other() && piece.GetAvailableMoves(this).Contains(position))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         public void MovePiece(Square from, Square to)
         {
             var movingPiece = _board[from.Row, from.Col];

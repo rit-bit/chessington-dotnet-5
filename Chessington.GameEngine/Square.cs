@@ -1,4 +1,6 @@
-﻿namespace Chessington.GameEngine
+﻿using System.Collections.Generic;
+
+namespace Chessington.GameEngine
 {
     public struct Square
     {
@@ -14,6 +16,17 @@
         public static Square At(int row, int col)
         {
             return new Square(row, col);
+        }
+
+        public static IEnumerable<Square> All()
+        {
+            for (var row = 0; row < GameSettings.BoardSize; row++)
+            {
+                for (var col = 0; col < GameSettings.BoardSize; col++)
+                {
+                    yield return At(row, col);
+                }
+            }
         }
 
         public bool IsValid()

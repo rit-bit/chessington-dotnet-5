@@ -79,9 +79,9 @@ namespace Chessington.GameEngine.Tests
             };
             A.CallTo(() => board.CapturedPieces).Returns(pieces);
             var calculator = new ScoreCalculator(board);
-            var whiteScore = calculator.GetWhiteScore();
+            var whiteScore = calculator.GetScore(Player.White);
 
-            whiteScore.Should().Be(2);
+            whiteScore.Should().Be(1);
         }
 
         [Test]
@@ -96,9 +96,9 @@ namespace Chessington.GameEngine.Tests
             };
             A.CallTo(() => board.CapturedPieces).Returns(pieces);
             var calculator = new ScoreCalculator(board);
-            var blackScore = calculator.GetBlackScore();
+            var blackScore = calculator.GetScore(Player.Black);
 
-            blackScore.Should().Be(1);
+            blackScore.Should().Be(2);
         }
         
         [Test]
@@ -118,7 +118,7 @@ namespace Chessington.GameEngine.Tests
             };
             A.CallTo(() => board.CapturedPieces).Returns(pieces);
             var calculator = new ScoreCalculator(board);
-            var blackScore = calculator.GetBlackScore();
+            var blackScore = calculator.GetScore(Player.Black);
 
             blackScore.Should().Be(17);
         }
@@ -140,7 +140,7 @@ namespace Chessington.GameEngine.Tests
             };
             A.CallTo(() => board.CapturedPieces).Returns(pieces);
             var calculator = new ScoreCalculator(board);
-            var whiteScore = calculator.GetWhiteScore();
+            var whiteScore = calculator.GetScore(Player.White);
 
             whiteScore.Should().Be(15);
         }
