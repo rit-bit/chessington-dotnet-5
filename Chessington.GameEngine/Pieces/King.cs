@@ -10,7 +10,28 @@ namespace Chessington.GameEngine.Pieces
 
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
-            return Enumerable.Empty<Square>();
+            // TODO King should not be able to move into check
+            return GetValidMoves(board).Where(square => !board.SquareOccupiedBy(square, Player));
+        }
+
+        public IEnumerable<Square> GetValidMoves(Board board)
+        {
+            return GetMovePatternSquares(board).Where(square => square.IsValid());
+        }
+
+        private IEnumerable<Square> GetMovePatternSquares(Board board)
+        {
+            var location = board.FindPiece(this);
+            for (var rowDif = -1; rowDif <= 1; rowDif++)
+            {
+                for (var colDif = -1; colDif <= 1; colDif++)
+                {
+                    if (!(rowDif == 0 && colDif == 0))
+                    {
+                        yield return Square.At(location.Row + rowDif, location.Col + colDif);
+                    }
+                }
+            }
         }
     }
 }
