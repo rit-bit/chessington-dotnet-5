@@ -45,8 +45,8 @@ namespace Chessington.GameEngine.Tests.Pieces
             moves.Should().Contain(Square.At(5, 5));
             moves.Should().Contain(Square.At(5, 6));
             moves.Should().Contain(Square.At(5, 7));
-            moves.Should().Contain(Square.At(6, 4));
-            moves.Should().Contain(Square.At(7, 5));
+            moves.Should().Contain(Square.At(6, 2));
+            moves.Should().Contain(Square.At(7, 2));
         }
         
         [Test]
@@ -74,7 +74,7 @@ namespace Chessington.GameEngine.Tests.Pieces
             board.AddPiece(Square.At(1, 1), friendlyPawn);
             var moves = rook.GetAvailableMoves(board).ToList();
 
-            moves.Count.Should().Be(12);
+            moves.Count.Should().Be(13);
             moves.Should().NotContain(Square.At(1, 0));
             moves.Should().Contain(Square.At(1, 1));
         }

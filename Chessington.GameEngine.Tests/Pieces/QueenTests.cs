@@ -85,7 +85,11 @@ namespace Chessington.GameEngine.Tests.Pieces
             board.AddPiece(Square.At(5, 4), friendlyPiece2);
             var moves = queen.GetAvailableMoves(board).ToList();
 
-            moves.Count.Should().Be(16);
+            moves.Count.Should().Be(17);
+            moves.Should().NotContain(Square.At(2, 4));
+            moves.Should().NotContain(Square.At(1, 5));
+            moves.Should().NotContain(Square.At(5, 5));
+            
             moves.Should().Contain(Square.At(0, 1));
             moves.Should().Contain(Square.At(1, 1));
             moves.Should().Contain(Square.At(2, 1));

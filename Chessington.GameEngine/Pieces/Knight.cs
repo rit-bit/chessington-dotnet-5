@@ -19,15 +19,25 @@ namespace Chessington.GameEngine.Pieces
         private IEnumerable<Square> GetMovePatternSquares(Board board)
         {
             var position = board.FindPiece(this);
-            return GetPairOfMoves(board, position, a)
-                .Concat(GetPairOfMoves(board, position, b))
-                .Concat(GetPairOfMoves(board, position, c))
-                .Concat(GetPairOfMoves(board, position, d));
+            var a = GetPairOfMoves(board, position, 2, true);
+            var b = (GetPairOfMoves(board, position, -2, true));
+            var c = (GetPairOfMoves(board, position, 2, false));
+            var d = (GetPairOfMoves(board, position, -2, false));
+            return a.Concat(b).Concat(c).Concat(d);
         }
 
-        private IEnumerable<Square> GetPairOfMoves(Board board,Square position, other)
+        private IEnumerable<Square> GetPairOfMoves(Board board,Square position, int increment, bool vertical)
         {
-            
+            if (vertical)
+            {
+                yield return Square.At(position.Row + increment, position.Col + 1);
+                yield return Square.At(position.Row + increment, position.Col - 1);
+            }
+            else
+            {
+                yield return Square.At(position.Row + 1, position.Col + increment);
+                yield return Square.At(position.Row - 1, position.Col + increment);
+            }
         }
 
 }
